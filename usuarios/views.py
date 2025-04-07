@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
-from .models import User
+from .models import Usuario
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
@@ -17,10 +17,10 @@ def criar_usuario(request):
     if not username or not senha:
         return Response({'Erro': 'Campos obrigatórios incompletos'}, status=status.HTTP_400_BAD_REQUEST)
     
-    if User.objects.filter(username=username).exists():
+    if Usuario.objects.filter(username=username).exists():
         return Response({'Erro': f'Username {username} já existe'}, status=status.HTTP_400_BAD_REQUEST)
     
-    usuario = User.objects.create_user(
+    usuario = Usuario.objects.create_user(
         username=username,
         password=senha,
         telefone=telefone
